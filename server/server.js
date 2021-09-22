@@ -86,7 +86,7 @@ server.put('/tasks/:id', async (req, res) => {
   res.json(JSON.parse(newRusult))
 })
 
-server.delet('/tasks/:id', async (req, res) => { 
+server.delete('/tasks/:id', async (req, res) => { 
   const result  = await readFile('./tasks.json')
   const tasks = JSON.parse(result);
   const newTasks = tasks.filter(item => item.id !== parseInt(req.params.id, 10))
