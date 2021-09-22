@@ -19,7 +19,9 @@ const Dummy = () => {
   },[items]);
 
   const add = () => {
+    let unique = items.length ? items[items.length-1].id + 1 : 1;
     axios.post('/tasks', {
+      id: unique,
       action: item,
       status: 'Not Done'
     })
@@ -31,9 +33,9 @@ const Dummy = () => {
     });
   }
 
-  const update = (index, s) => {
-    console.log(index, s)
-    axios.put(`/tasks/${index}`, {
+  const update = (id, s) => {
+    console.log(id, s)
+    axios.put(`/tasks/${id}`, {
       status: s
     })
     .then(response => {
@@ -70,9 +72,9 @@ const Dummy = () => {
             </div>
           </div>
           <div>
-            {items.map((i, index) => {
+            {items.map(i => {
               return (
-                <div className={`flex mb-4 items-center rounded-md py-2 px-3 ${i.status === 'Done' ? 'bg-indigo-200': 'bg-indigo-600'}`} key={index}>
+                <div className={`flex mb-4 items-center rounded-md py-2 px-3 ${i.status === 'Done' ? 'bg-indigo-200': 'bg-indigo-600'}`} key={i.id}>
                   <div className="flex items-center justify-between flex-wrap">
                     <p className={`${i.status === 'Done' ? 'text-grey': 'text-white'}`}>
                       {i.action}
@@ -81,7 +83,7 @@ const Dummy = () => {
                       <button
                         type="button"
                         className={`flex-no-shrink p-2 ml-4 relative mr-2 border-2 rounded ${i.status === 'Done' ? 'bg-blue-200 hover:bg-blue-400': 'bg-green-500 hover:bg-green-700'} `}
-                        onClick={() => update(index, i.status === "Done" ? "Not Done":"Done")}
+                        onClick={() => update(i.id, i.status === "Done" ? "Not Done":"Done")}
                       >
                         {i.status === "Done" ? 
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
