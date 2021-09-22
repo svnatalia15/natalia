@@ -59,13 +59,11 @@ server.get('/', (req, res) => {
 })
 
 server.get('/tasks', async (req, res) => {
-  console.log("HERE")
   const result  = await readFile('./tasks.json');
   res.json(JSON.parse(result))
 })
 
 server.post('/tasks', async (req, res) => {
-  console.log("HERE")
   const result  = await readFile('./tasks.json')
   const tasks = JSON.parse(result);  
   const newTasks = [...tasks, req.body]
@@ -76,12 +74,12 @@ server.post('/tasks', async (req, res) => {
 
 server.put('/tasks/:id', async (req, res) => { 
   const result  = await readFile('./tasks.json')
-  const tasks = JSON.parse(result);  
+  const tasks = JSON.parse(result);
   const newTasks = tasks.map(item => {
-    if (item.id === req.params.id){
+    if (item.id === parseInt(req.params.id, 10)){
       return {...item, status: req.body.status}
     } 
-    return item    
+    return item     
   })
   await writeFile('./tasks.json', JSON.stringify(newTasks))
   const newRusult  = await readFile('./tasks.json');
