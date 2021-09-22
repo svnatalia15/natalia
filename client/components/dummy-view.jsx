@@ -3,7 +3,7 @@ import axios from 'axios'
 import Head from './head'
 
 const Dummy = () => {
-  const listItems = []
+  const listItems = [{"id":1,"action":"Task1","status":"Not Done"}]
   const [ items, setItems ] = useState(listItems)
   
   const newItem = ''
@@ -27,6 +27,7 @@ const Dummy = () => {
     })
     .then(response => {
       setItems(response.data)
+      setItem('')
     })
     .catch(error => {
       console.log(error);
@@ -65,12 +66,12 @@ const Dummy = () => {
             <h1 className="text-lg leading-6 font-medium text-gray-900">To Do List</h1>
             <div className="flex mt-4">              
               <input 
-              className="py-2 px-3 focus:ring-indigo-500 border focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
+              className="py-2 px-3 border focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
               placeholder="Add Task"
               value={item}
               onChange={(e) => setItem(e.target.value)}
               />
-              <span className="button inline-flex items-center px-3 rounded-r-md border-2 border-indigo-500 bg-white text-gray-500 text-sm hover:text-white hover:bg-indigo-500">
+              <span className="button inline-flex items-center px-3 rounded-r-md border-2 border-indigo-500 bg-indigo-400 text-white text-sm hover:bg-indigo-500">
               <button
                 type="button"
                 className="hover:bg-indigo-500"
@@ -84,15 +85,15 @@ const Dummy = () => {
           <div>
             {items.map(i => {
               return (
-                <div className={`flex mb-4 items-center rounded-md py-2 px-3 ${i.status === 'Done' ? 'bg-indigo-200': 'bg-indigo-600'}`} key={i.id}>
+                <div className={`mr-5 ml-5 flex mb-4 items-center rounded-md py-2 px-3 ${i.status === 'Done' ? 'bg-indigo-200': 'bg-indigo-600'}`} key={i.id}>
                   <div className="flex items-center justify-between flex-wrap">
                     <p className={`${i.status === 'Done' ? 'text-grey': 'text-white'}`}>
                       {i.action}
                     </p>
-                    <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+                    <div className="ml-20 mt-2 w-full sm:order-2 sm:mt-0 sm:w-auto">
                       <button
                         type="button"
-                        className={`flex-no-shrink p-2 ml-4 relative mr-2 border-2 rounded ${i.status === 'Done' ? 'bg-blue-200 hover:bg-blue-400': 'bg-green-500 hover:bg-green-700'} `}
+                        className={`flex-no-shrink p-1 relative border-2 rounded ${i.status === 'Done' ? 'bg-blue-200 hover:bg-blue-400': 'bg-green-500 hover:bg-green-700'} `}
                         onClick={() => update(i.id, i.status === "Done" ? "Not Done":"Done")}
                       >
                         {i.status === "Done" ? 
@@ -107,7 +108,7 @@ const Dummy = () => {
                       </button>
                       <button
                         type="button"
-                        className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red bg-red-500 hover:text-white hover:bg-red-700 "
+                        className="flex-no-shrink p-1 border-2 rounded text-red border-red bg-red-500 hover:text-white hover:bg-red-700 "
                         onClick={() => remove(i.id)}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
