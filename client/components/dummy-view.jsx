@@ -19,7 +19,7 @@ const Dummy = () => {
   },[items]);
 
   const add = () => {
-    let unique = items.length ? items[items.length-1].id + 1 : 1;
+    const unique = items.length ? items[items.length-1].id + 1 : 1;
     axios.post('/tasks', {
       id: unique,
       action: item,
