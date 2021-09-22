@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
-const { readFile } = require('fs/promises')
+const { readFile, writeFile } = require('fs/promises')
 
 require('colors')
 
