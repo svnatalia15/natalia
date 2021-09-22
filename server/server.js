@@ -9,6 +9,8 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
+const { readFile } = require('fs/promises')
+
 require('colors')
 
 let Root
@@ -44,6 +46,8 @@ const [htmlStart, htmlEnd] = Html({
   title: 'Skillcrucial'
 }).split('separator')
 
+
+
 server.get('/', (req, res) => {
   const appStream = renderToStaticNodeStream(<Root location={req.url} context={{}} />)
   res.write(htmlStart)
@@ -52,6 +56,22 @@ server.get('/', (req, res) => {
     res.write(htmlEnd)
     res.end()
   })
+})
+
+server.get('/tasks', async (req, res) => {
+  console.log("HERE")
+  const result  = await readFile('./tasks.json');
+  res.json(JSON.parse(result))
+})
+
+server.post('/tasks', async (req, res) => {
+  console.log("HERE")
+  const result  = await readFile('./tasks.json')
+  const tasks = JSON.parse(result);  
+  const newTasks = [...tasks, req.body]
+  await writeFile('./tasks.json', JSON.stringify(newTasks))
+  const newRusult  = await readFile('./tasks.json');
+  res.json(JSON.parse(newRusult))
 })
 
 server.get('/*', (req, res) => {
