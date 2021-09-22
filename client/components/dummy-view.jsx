@@ -24,11 +24,11 @@ const Dummy = () => {
       action: item,
       status: 'Not Done'
     })
-    .then(function (response) {
+    .then(response => {
       console.log(response)
-      setItems(result.data)
+      setItems(response.data)
     })
-    .catch(function (error) {
+    .catch(error => {
       console.log(error);
     });
   }
