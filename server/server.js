@@ -74,6 +74,20 @@ server.post('/tasks', async (req, res) => {
   res.json(JSON.parse(newRusult))
 })
 
+server.put('/tasks/:id', async (req, res) => {  
+  const result  = await readFile('./tasks.json')
+  const tasks = JSON.parse(result);  
+  const newTasks = tasks.map((item, index) => {
+    if (index === req.params.id){
+      item.status = req.body.status;
+    }
+    return item
+  })
+  await writeFile('./tasks.json', JSON.stringify(newTasks))
+  const newRusult  = await readFile('./tasks.json');
+  res.json(JSON.parse(newRusult))
+})
+
 server.get('/*', (req, res) => {
   const appStream = renderToStaticNodeStream(<Root location={req.url} context={{}} />)
   res.write(htmlStart)

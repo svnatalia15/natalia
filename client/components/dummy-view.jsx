@@ -13,7 +13,6 @@ const Dummy = () => {
     axios
     .get("/tasks")
     .then(result => {
-      console.log(result)
       setItems(result.data)
     })
     .catch(error => console.log(error));
@@ -25,7 +24,18 @@ const Dummy = () => {
       status: 'Not Done'
     })
     .then(response => {
-      console.log(response)
+      setItems(response.data)
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  const update = (index, status) => {
+    axios.put(`/tasks/${index}`, {
+      status: status
+    })
+    .then(response => {
       setItems(response.data)
     })
     .catch(error => {
@@ -70,9 +80,7 @@ const Dummy = () => {
                       <button
                         type="button"
                         className={`flex-no-shrink p-2 ml-4 relative mr-2 border-2 rounded ${i.status === 'Done' ? 'bg-blue-200 hover:bg-blue-400': 'bg-green-500 hover:bg-green-700'} `}
-                        onClick={() => setItems(items.map(listItem => 
-                          i.action === listItem.action ? {status: listItem.status === 'Done' ? 'Not Done':'Done', action: listItem.action} : listItem
-                        ))}
+                        onClick={() => update(index, i.status === "Done" ? "Not Done":"Done")}
                       >
                         {i.status === "Done" ? 
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
