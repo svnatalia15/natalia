@@ -33,15 +33,15 @@ const Dummy = () => {
 
   const update = (index, status) => {
     console.log(index, status)
-    // axios.put(`/tasks/${index}`, {
-    //   status: status
-    // })
-    // .then(response => {
-    //   setItems(response.data)
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    // });
+    axios.put(`/tasks/${index}`, {
+      status: status
+    })
+    .then(response => {
+      setItems(response.data)
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
   
   return (
