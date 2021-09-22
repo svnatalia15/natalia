@@ -25,7 +25,7 @@ const Dummy = () => {
       status: 'Not Done'
     })
     .then(function (response) {
-      console.log(result)
+      console.log(response)
       setItems(result.data)
     })
     .catch(function (error) {
