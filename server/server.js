@@ -86,6 +86,15 @@ server.put('/tasks/:id', async (req, res) => {
   res.json(JSON.parse(newRusult))
 })
 
+server.delet('/tasks/:id', async (req, res) => { 
+  const result  = await readFile('./tasks.json')
+  const tasks = JSON.parse(result);
+  const newTasks = tasks.filter(item => item.id !== parseInt(req.params.id, 10))
+  await writeFile('./tasks.json', JSON.stringify(newTasks))
+  const newRusult  = await readFile('./tasks.json');
+  res.json(JSON.parse(newRusult))
+})
+
 server.get('/*', (req, res) => {
   const appStream = renderToStaticNodeStream(<Root location={req.url} context={{}} />)
   res.write(htmlStart)
