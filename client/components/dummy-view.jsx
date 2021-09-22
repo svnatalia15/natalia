@@ -31,10 +31,10 @@ const Dummy = () => {
     });
   }
 
-  const update = (index, status) => {
-    console.log(index, status)
+  const update = (index, s) => {
+    console.log(index, s)
     axios.put(`/tasks/${index}`, {
-      status: status
+      status: s
     })
     .then(response => {
       setItems(response.data)
